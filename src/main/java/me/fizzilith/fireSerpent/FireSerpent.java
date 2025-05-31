@@ -12,6 +12,7 @@ import com.projectkorra.projectkorra.util.ParticleEffect;
 import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -109,7 +110,7 @@ public class FireSerpent extends FireAbility implements AddonAbility {
                     playFirebendingSound(this.loc);
                 }
 
-                ParticleEffect.SMOKE_NORMAL.display(this.loc, this.particleAmount, (double)this.BallSize, (double)this.BallSize, (double)this.BallSize, (double)0.0F);
+                loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, this.loc, this.particleAmount, this.BallSize, this.BallSize, this.BallSize, 0.0F);
             }
 
             if (this.p.isSneaking() && System.currentTimeMillis() > this.startTime + this.chargetime) {
@@ -119,8 +120,8 @@ public class FireSerpent extends FireAbility implements AddonAbility {
                     playFirebendingSound(this.loc);
                 }
 
-                ParticleEffect.FLAME.display(this.loc, this.particleAmount, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)0.05F);
-                ParticleEffect.SMOKE_NORMAL.display(this.player.getLocation(), 1, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)1.0E-4F);
+                playFirebendingParticles(this.loc, this.particleAmount, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F));
+                loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, this.loc, this.particleAmount, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), 0.0F);
                 if (!this.notified) {
                     playCombustionSound(this.loc);
                     this.p.sendMessage(ChatColor.RED + "Your inner fire is ready to be unleashed into a powerful fire Serpent!");
@@ -164,8 +165,9 @@ public class FireSerpent extends FireAbility implements AddonAbility {
                 playFirebendingSound(this.loc);
             }
 
-            ParticleEffect.FLAME.display(this.loc, this.particleAmount, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)0.005F);
-            ParticleEffect.SMOKE_NORMAL.display(this.loc, this.particleAmount, (double)(this.BallSize + 0.1F), (double)(this.BallSize + 0.1F), (double)(this.BallSize + 0.1F), (double)0.005F);
+            playFirebendingParticles(this.loc, this.particleAmount, (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F), (double)(this.BallSize + 0.05F));
+            loc.getWorld().spawnParticle(Particle.SMOKE_NORMAL, this.loc, this.particleAmount, (double)(this.BallSize + 0.1F), (double)(this.BallSize + 0.1F), 0.0F);
+
             if (this.p.isDead() || !this.p.isOnline()) {
                 return;
             }
@@ -213,7 +215,7 @@ public class FireSerpent extends FireAbility implements AddonAbility {
                     playFirebendingSound(this.loc);
                 }
 
-                ParticleEffect.FLAME.display(e.getLocation(), 600, (double)0.2F, (double)0.2F, (double)0.2F, (double)1.0F);
+                playFirebendingParticles(e.getLocation(), 600, (double)0.2F, (double)0.2F, (double)0.2F);
             }
         }
 
